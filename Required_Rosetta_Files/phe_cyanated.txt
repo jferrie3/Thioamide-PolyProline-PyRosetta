@@ -1,0 +1,50 @@
+## fullatom protein N(6)-cyanation patch for phenylalanine
+## By Andy M. Chen, June 2009, achen39@jhu.edu
+
+NAME cyanated
+TYPES ADDUCT_VARIANT
+
+## general requirements for this patch
+
+BEGIN_SELECTOR
+PROPERTY PROTEIN
+AA PHE
+NOT VARIANT_TYPE ACETYLATION
+NOT VARIANT_TYPE METHYLATION ##Just in case
+NOT VARIANT_TYPE DIMETHYLATION ##Just in case
+NOT VARIANT_TYPE TRIMETHYLATION ##Just in case
+NOT VARIANT_TYPE PROTONATED
+NOT VARIANT_TYPE DEPROTONATED
+END_SELECTOR
+
+## now we search for a case that matches the residue, take the first one
+## so put generic case last
+
+BEGIN_CASE ### THE GENERAL CASE ##########################################
+
+SET_IO_STRING CNF K
+SET_INTERCHANGEABILITY_GROUP CNF
+## these are the operations involved
+DELETE_ATOM HZ ## One of the amine hydrogens is now a carbon atom
+# DELETE_ATOM 3HZ ## Positive charge removed with deprotonation
+
+## Define the added nitrile group
+ADD_ATOM  CT  COO  C   0.63  ## Copied from p-cyanophenylalanine param file
+ADD_ATOM  NI  Nhis N  -0.52 ## Nitrogen of nitrile group
+ADD_BOND  CZ  CT 
+ADD_BOND  CT  NI
+
+## The nitrile group adds 2 extra chi angles
+ADD_CHI 3  N    CA   C    O
+ADD_CHI 4  CE1  CZ   CT   NI
+
+## The information for the added hydrogens was copied from the 3 hydrogens 
+##   bonded to the delta carbon of Ile
+SET_ICOOR CT   179.919910   59.930951    1.444471   CZ    CE1   CE2 
+SET_ICOOR NI   112.993100    0.255034    1.136358   CT    CZ    CE1
+
+## Change the affected carbon type
+SET_ATOM_TYPE CZ aroC
+SET_MM_ATOM_TYPE CZ CE1
+
+END_CASE
