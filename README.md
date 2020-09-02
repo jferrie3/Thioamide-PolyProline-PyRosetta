@@ -3,10 +3,10 @@
 
 ## Algorithm Descriptions
 ### Thioamide_PolyProline.py
+Simulates polyproline peptides containing fluorophore and backbone/sidechain thioamide pairs for comparisons to experimental FRET data.
 
-
-### Analyze_Thioamide_Polyproline.py
-
+### Data_Analysis.py
+Performs analysis of outputs from Thioamide_PolyProline.py to compute fluorescence quenching via FRET, Dexter and distance-dependent quenching mechanisms.
 
 ### Installation Guide
 __Operating System:__ Linux (64-bit)
@@ -26,8 +26,6 @@ An anaconda environment containing all necessary packages can be found in the an
 
 ```conda env create -f lion.yml```
 
-## Simulation Times
-
 
 ## Required Files
 Since both backbone and sidechain thioamide simulations are run out of the same script all of the following files are required for runs:
@@ -37,7 +35,7 @@ lys_thioacetyl.txt - Rosetta Residue Patch file for parameterizaiton of the side
 phe_cyanated.txt - Rosetta Residue Patch file for parameterization of the p-cyanophenylalanine fluorescent amino acid
 thioamideN.txt - Rosetta Residue Patch file adjustment of the proceeding residue amide nitrogen charge to match that from Gaussian simulations of the thioamide
 ```
-All files can be found in the Required_Rosetta_Files folder
+All files can be found in the params folder
 ## Running Thioamide_PolyProline
 The simulation can be run as follows, which represents the default simulation
 ```
@@ -60,3 +58,14 @@ Followed by the following flags detailed below
 -CNF_TYR --CNF_as_TYR cis and trans probabilities from TYR rather than PHE
 ```
 ## Analyzing the Output Data
+Data analysis is performed with the Data_Analysis.py script as follows:
+```
+run Data_Analysis.py -F CNF -D Thioamide_Polyproline_BB -S RndChi_InterCIS_TermCIS_CHPiCIS
+```
+The flags are detailed below
+```
+-F --Donor_Fluor 3-Letter code for Donor fluorophore (CNF=cyanophenylalanine, TYR=tyrosine, TRP=tryptophan
+-D --Directory_Name Name of the directory that houses outputs from all PolyProlines
+-S --Sampling_Name  Name of the sampling scheme used. If no scheme was specified do not use this flag
+```
+Analysis script computes FRET using the PDA approximation, instantaneous kappa-squared and TrESP methods along with quenching due to distance-dependent quenching and Dexter along with all intermediate parameters.

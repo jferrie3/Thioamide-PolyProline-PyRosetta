@@ -3,8 +3,6 @@ channels:
   - https://conda.graylab.jhu.edu
   - salilab
   - conda-forge
-  - https://levinthal:paradox@conda.graylab.jhu.edu
-  - https://levintal:paradox@conda.graylab.jhu.edu
   - defaults
 dependencies:
   - backcall=0.1.0=py36_0
