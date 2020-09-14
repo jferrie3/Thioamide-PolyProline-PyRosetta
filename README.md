@@ -5,8 +5,17 @@
 ### Thioamide_PolyProline.py
 Simulates polyproline peptides containing fluorophore and backbone/sidechain thioamide pairs for comparisons to experimental FRET data.
 
-### Data_Analysis.py
+### PolyProline_Data_Analysis.py
 Performs analysis of outputs from Thioamide_PolyProline.py to compute fluorescence quenching via FRET, Dexter and distance-dependent quenching mechanisms.
+
+### CaM_pOCNC_Thioamide.py
+Simulates CaM_pOCNC complexes fluorophore and backbone thioamide pairs for comparisons to experimental FRET data.
+
+### CaM_Data_Analysis.py
+Performs analysis of outputs from CaM_pOCNC_Thioamide.py to compute fluorescence quenching via FRET, Dexter and distance-dependent quenching mechanisms.
+
+### Compute_FRET_Interchanged.py
+Performs all FRET calculations in the CaM_pOCNC_Thioamide.py script.
 
 ### Installation Guide
 __Operating System:__ Linux (64-bit)
@@ -27,7 +36,7 @@ An anaconda environment containing all necessary packages can be found in the an
 ```conda env create -f lion.yml```
 
 
-## Required Files
+### Required Files
 Since both backbone and sidechain thioamide simulations are run out of the same script all of the following files are required for runs:
 ```
 TBL.params - Rosetta Residue Params file for parameterization of the backbone thioamide containing Leu amino acid
@@ -36,7 +45,8 @@ phe_cyanated.txt - Rosetta Residue Patch file for parameterization of the p-cyan
 thioamideN.txt - Rosetta Residue Patch file adjustment of the proceeding residue amide nitrogen charge to match that from Gaussian simulations of the thioamide
 ```
 All files can be found in the params folder
-## Running Thioamide_PolyProline
+## Thioamide PolyProline Simulations
+### Running Thioamide_PolyProline
 The simulation can be run as follows, which represents the default simulation
 ```
 run Thioamide_PolyProline.py -T BB -F CNF -PNUM 2 -Rnd_Chi False -Inter_CIS False -Term_CIS False -BB_NUM 100 -ROT_NUM 1000 -RUB_NUM 50 -show False -dump False
@@ -57,15 +67,37 @@ Followed by the following flags detailed below
 -Rnd_Chi --Random_Chi Effectively randomize the chi angles of terminal residues.
 -CNF_TYR --CNF_as_TYR cis and trans probabilities from TYR rather than PHE
 ```
-## Analyzing the Output Data
-Data analysis is performed with the Data_Analysis.py script as follows:
+### Analyzing the PolyProline Output Data
+Data analysis is performed with the PolyProline_Data_Analysis.py script as follows:
 ```
-run Data_Analysis.py -F CNF -D Thioamide_Polyproline_BB -S RndChi_InterCIS_TermCIS_CHPiCIS
+run PolyProline_Data_Analysis.py -F CNF -D Thioamide_Polyproline_BB -S RndChi_InterCIS_TermCIS_CHPiCIS
 ```
 The flags are detailed below
 ```
 -F --Donor_Fluor 3-Letter code for Donor fluorophore (CNF=cyanophenylalanine, TYR=tyrosine, TRP=tryptophan
 -D --Directory_Name Name of the directory that houses outputs from all PolyProlines
 -S --Sampling_Name  Name of the sampling scheme used. If no scheme was specified do not use this flag
+```
+Analysis script computes FRET using the PDA approximation, instantaneous kappa-squared and TrESP methods along with quenching due to distance-dependent quenching and Dexter along with all intermediate parameters.
+
+## CaM/pOCNC Simulations
+### Running CaM_pOCNC_Thioamide
+The simulation can be run as follows, which represents the default simulation
+```
+run CaM_pOCNC_Thioamide.py -STRUCT_NUM 1 -RUB_NUM 10000 -OUT_NUM 100
+```
+Followed by the following flags detailed below
+```
+-STRUCT_NUM Identifies where the thioamide and fluorophore will be placed within the peptide/protein as detailed in the array on line 50.
+-RUB_NUM Number of attempted Backrub/Sidechain Moves prior to structural output.
+-OUT_NUM Number of output structures
+-show Show simulation process in the command-line
+-dump Dump the resultatnt structures to output PDBs
+```
+Note that the Compute_FRET_Interchanged.py script is required for running Cam/pOCNC simulations as this script specific performs the EFRET computes
+### Analyzing the CaM/pOCNC Output Data
+Data analysis is performed with the CaM_Data_Analysis.py script as follows:
+```
+run CaM_Data_Analysis.py -S Name_of_Cam_pOCNC_Thioamide_output_score_file.sc
 ```
 Analysis script computes FRET using the PDA approximation, instantaneous kappa-squared and TrESP methods along with quenching due to distance-dependent quenching and Dexter along with all intermediate parameters.
