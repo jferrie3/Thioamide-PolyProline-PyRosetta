@@ -1,23 +1,23 @@
 # Thioamide PolyProline PyRosetta
  PyRosetta Simulations of Thioamide FRET
 
-## Algorithm Descriptions
-### Thioamide_PolyProline.py
+## Script Descriptions
+#### Thioamide_PolyProline.py
 Simulates polyproline peptides containing fluorophore and backbone/sidechain thioamide pairs for comparisons to experimental FRET data.
 
-### PolyProline_Data_Analysis.py
+#### PolyProline_Data_Analysis.py
 Performs analysis of outputs from Thioamide_PolyProline.py to compute fluorescence quenching via FRET, Dexter and distance-dependent quenching mechanisms.
 
-### CaM_pOCNC_Thioamide.py
+#### CaM_pOCNC_Thioamide.py
 Simulates CaM_pOCNC complexes fluorophore and backbone thioamide pairs for comparisons to experimental FRET data.
 
-### CaM_Data_Analysis.py
+#### CaM_Data_Analysis.py
 Performs analysis of outputs from CaM_pOCNC_Thioamide.py to compute fluorescence quenching via FRET, Dexter and distance-dependent quenching mechanisms.
 
-### Compute_FRET_Interchanged.py
+#### Compute_FRET_Interchanged.py
 Performs all FRET calculations in the CaM_pOCNC_Thioamide.py script.
 
-### Installation Guide
+## Installation Guide
 __Operating System:__ Linux (64-bit)
 
 __Programming Langauge:__ Python
@@ -36,7 +36,7 @@ An anaconda environment containing all necessary packages can be found in the an
 ```conda env create -f lion.yml```
 
 
-### Required Files
+## Required Files
 Since both backbone and sidechain thioamide simulations are run out of the same script all of the following files are required for runs:
 ```
 TBL.params - Rosetta Residue Params file for parameterization of the backbone thioamide containing Leu amino acid
